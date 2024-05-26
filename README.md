@@ -16,6 +16,14 @@ System requirements
 - Alembic package
 - Editor coroutine package
 
+How to Install
+--------------
+
+Copy the git path.
+Open UnityPackageManager and select "add a package from git URL", paste path.
+
+If you get error, try install "EditorCoroutine" from UnityRegistory.
+![](/Doc/image2024-05-27-00-23-57.png)
 
 How to use Alembic to VAT converter
 -------------------------------------
