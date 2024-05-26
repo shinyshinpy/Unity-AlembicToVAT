@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.EditorCoroutines.Editor;
+using shin.AlembicToVAT;
 
 public enum TopologyType
 {
@@ -359,6 +360,9 @@ public class ATV_Editor : EditorWindow
 			Debug.Log("Frames count : " + framesCount);
 			Debug.Log("Vertices count : " + vertexCount);
 
+			JsonData jsonData = new JsonData();
+			jsonData.numOfFrame = adjustedFramesCount;
+
 			bool exportVAT = true;
 
 			columns = Mathf.CeilToInt(Mathf.Sqrt((float)vertexCount / (float)adjustedFramesCount));
@@ -567,6 +571,11 @@ public class ATV_Editor : EditorWindow
 			PrefabUtility.SaveAsPrefabAsset(newGameObject, finalExportPath + ExportFilename + "_prefab.prefab");
 
 			DestroyImmediate(newGameObject);
+
+			Debug.Log("export data to json");
+
+			JsonHelper helper = new JsonHelper(finalExportPath, ExportFilename);
+			helper.CreateJson(jsonData);
 		}
 	}
 }
