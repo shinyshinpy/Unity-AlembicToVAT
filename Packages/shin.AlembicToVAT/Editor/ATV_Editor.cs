@@ -226,10 +226,17 @@ public class ATV_Editor : EditorWindow
 
 	void FolderSetting(string pathFromAssets)
 	{
-		if(!System.IO.Directory.Exists(pathFromAssets))
+		if (!System.IO.Directory.Exists(pathFromAssets))
 		{
 			System.IO.Directory.CreateDirectory(pathFromAssets);
 		}
+	}
+
+	private void SaveTexture(string filePath, Texture2D texture)
+	{
+		var bytes = texture.EncodeToPNG();
+		System.IO.File.WriteAllBytes(filePath, bytes);
+		AssetDatabase.Refresh();
 	}
 
 	IEnumerator ExportFrames()
@@ -512,17 +519,22 @@ public class ATV_Editor : EditorWindow
 				newBounds.min = minBounds;
 				Debug.Log("Min bounds : " + minBounds.x + " , " + minBounds.y + " , " + minBounds.z);
 				Debug.Log("Max bounds : " + maxBounds.x + " , " + maxBounds.y + " , " + maxBounds.z);
+				jsonData.posMax = maxBounds;
+				jsonData.posMin = minBounds;
 
 				bakedMesh.bounds = newBounds;
 
 				positionTexture.Apply();
 				normalTexture.Apply();
 
-				Debug.Log("Saving positions texture asset at " + finalExportPath + ExportFilename + "_position.asset");
-				AssetDatabase.CreateAsset(positionTexture, finalExportPath + ExportFilename + "_position.asset");
+				var path = finalExportPath + ExportFilename + "_position.png";
+				Debug.Log("Saving positions texture asset at " + path);
+				SaveTexture(path, positionTexture);
 				AssetDatabase.SaveAssets();
-				Debug.Log("Saving normals texture asset at " + finalExportPath + ExportFilename + "_normal.asset");
-				AssetDatabase.CreateAsset(normalTexture, finalExportPath + ExportFilename + "_normal.asset");
+
+				path = finalExportPath + ExportFilename + "_normal.png";
+				Debug.Log("Saving normals texture asset at " + path);
+				SaveTexture(path, normalTexture);
 				AssetDatabase.SaveAssets();
 
 				bakedMesh.uv2 = uv2;

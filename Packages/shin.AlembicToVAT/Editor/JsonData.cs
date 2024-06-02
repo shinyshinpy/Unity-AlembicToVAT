@@ -9,7 +9,7 @@ namespace shin.AlembicToVAT
     public class JsonData
     {
         public int numOfFrame = 0;
-        public float posMin = 0f;
-        public float posMax = 0f;
+        public Vector3 posMin = Vector3.zero;
+        public Vector3 posMax = Vector3.zero;
     }
 }
