@@ -424,7 +424,7 @@ public class ATV_Editor : EditorWindow
 		Debug.Log("Vertices count : " + vertexCount);
 
 		JsonData jsonData = new JsonData();
-		jsonData.numOfFrame = adjustedFramesCount;
+		jsonData.numOfFrame = framesCount;
 
 		bool exportVAT = true;
 
